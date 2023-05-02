@@ -1,32 +1,33 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-{
-  /* <div id="parent">
-    <div id="child">
-        <h1>This is react H1 Tag</h1>
-        <h1>This is second args</h1>
-    </div>
-</div> */
-}
+// // React.createElement => Object => HTMLElement(render)
 
-const parent = React.createElement(
-  "div",
-  {
-    id: "parent",
-  },
-  React.createElement(
-    "div",
-    {
-      id: "child",
-    },
-    [
-      React.createElement("h1", {}, "This is react H1 Tag"),
-      React.createElement("h2", {}, "This is second args"),
-    ]
-  )
-);
+// // const heading = React.createElement("h1", { id: "heading" }, "Namaste React");
 
-// const heading = React.createElement("h1", {} , "This is react H1 Tag");
+// //JSX (Transpiled before it reaches the JS) - Parcel - Babel
+// //JSX =>Babel transpiles it to React.createElement => ReactElement => JS Object => HTMLElement(render)
+// const jsxHeading = <h1 id="heading">This is JSX heading</h1>;
+// // console.log(heading);
+// console.log(jsxHeading);
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(jsxHeading);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(parent);
+
+//  React Component
+
+const Title = () => {
+  return <h1 id="heading">Namaste React JS through Title Component</h1>;
+};
+
+const Heading = () => {
+  return (
+    <div id="container">
+      <Title />
+      <h1>This is a React Heading Component </h1>
+    </div>
+  );
+};
+
+root.render(<Heading />);
