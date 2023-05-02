@@ -26,7 +26,6 @@ const parent = React.createElement(
     ]
   )
 );
-
 // const heading = React.createElement("h1", {} , "This is react H1 Tag");
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(parent);
