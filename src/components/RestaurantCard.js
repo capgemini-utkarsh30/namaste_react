@@ -15,7 +15,6 @@ const RestaurantCard = (props) => {
     cloudinaryImageId,
   } = props.resDetail;
 
-  console.log(costForTwo, "xx");
   return (
     <div className="res-card" style={styleCard}>
       <img
