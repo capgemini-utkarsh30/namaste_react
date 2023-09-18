@@ -2,23 +2,25 @@ import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
+import Offline from "./Offline";
 
 const Body = (props) => {
   const [resListData, setResListData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchText, setSearchText] = useState("");
 
+  const onlineStatus = useOnlineStatus();
+
   useEffect(() => {
     console.log("Data Fetched");
     fetchData();
-    console.log(resListData);
   }, []);
 
   const fetchData = async () => {
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
-
     const json = await data.json();
 
     console.log(
@@ -51,28 +53,40 @@ const Body = (props) => {
     setFilteredData(searchData);
   };
 
+  // check if Online or Offline
+
+  if (onlineStatus === false) return <Offline />;
+
   // Conditional Rendering
   return resListData?.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
-        <div className="search">
+      <div className="flex">
+        <div className="m-4 p-4 flex items-center">
           <input
             type="text"
-            className="search-box"
+            className="p-2 border border-solid border-gray-200 rounded-md shadow-lg"
             value={searchText}
             onChange={getSearchValue}
           />
-          <button className="search-btn" onClick={searchRes}>
+          <button
+            className="px-4 py-2 bg-green-200 m-4 font-semibold cursor-pointer shadow-lg rounded-md"
+            onClick={searchRes}
+          >
             Search
           </button>
         </div>
-        <button className="filter-btn" onClick={filterData}>
-          Top Rated Restaurants
-        </button>
+        <div className="m-4 p-4">
+          <button
+            className="px-4 py-2 bg-gray-200 m-4 font-semibold cursor-pointer shadow-lg rounded-md"
+            onClick={filterData}
+          >
+            Top Rated Restaurants
+          </button>
+        </div>
       </div>
-      <div className="res-container">
+      <div className="flex flex-wrap">
         {filteredData?.map((resObject) => {
           console.log(resObject);
           return (
